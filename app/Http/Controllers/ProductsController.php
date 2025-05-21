@@ -3,31 +3,45 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-
-        return view('products.index', ['products' => Product::all()]);
+        $filter = $request->input('search');
+        if($filter){
+            $products = Product::where('name', 'like', "%$filter%")->get();
+        }else{
+            $products = Product::with('type')->orderBy('name', 'asc')->get();
+        }
+        return view('products.index', ['products' => $products, 'filter'=> $filter]);
     }
 
     public function create()
     {
-        return view('products.create');
+        return view('products.create', [
+            'types' => Type::all()
+        ]);
     }
 
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|min:2|max:50 ',
+            'quantity' => 'required|gt:0',
+            'price' => 'required|gt:0'
+        ]);
         Product::create(['name' => $request->name, 'description' => $request->description, 'quantity' => $request->quantity, 'price' => $request->price, 'type_id' => $request->type_id]);
-        return redirect('/products');
+        return redirect('/products')->with('success', 'Produto Adicionado
+        com sucesso!');
     }
 
     public function edit($id)
     {
         $product = Product::find($id);
-        return view('products.edit', ['product' => $product]);
+        return view('products.edit', ['product' => $product, 'types' => Type::all()]);
     }
     public function update(Request $request)
     {
