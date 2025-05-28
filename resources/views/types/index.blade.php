@@ -12,7 +12,7 @@
     <ul>
         @foreach($types as $type)
         <li>{{$type['name']}} <a href="{{ url('/types/update', ['id' => $type->id]) }}">Editar</a>
-            {{$type['']}}  <a href="{{ url('/type/delete', ['id' => $type->id]) }}">Excluir</a>
+            {{$type['']}}  <a href="{{ url('/types/delete', ['id' => $type->id]) }}">Excluir</a>
 
         </li>
 
