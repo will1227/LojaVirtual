@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Type;
+use GuzzleHttp\Psr7\Query;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class TypesController extends Controller
@@ -41,8 +43,21 @@ class TypesController extends Controller
     }
     public function destroy($id)
     {
-        $type = Type::find($id);
-        $type->delete();
-        return redirect('/types')->with('success', 'tipo excluído com sucesso!');
+        try{
+            $type = Type::find($id);
+            $type->delete();
+            return redirect('/types')->with('success', 'tipo excluído com sucesso!');
+        }catch(QueryException $e){
+            if($e->getCode() === '23000'){
+                return redirect('/types')->with('error', 'Não é possivel excluir, exitem produtos com esse tipo');
+
+            }
+                return redirect('/types')->with('error', 'Erro inesperado');
+
+        } catch(\Throwable $e){
+                return redirect('/types')->with('error', 'Erro inesperado');
+
+        }
+
     }
 }
