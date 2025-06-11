@@ -8,6 +8,16 @@
 </head>
 
 <body>
+    @if ($message = Session::get('success'))
+                <div class="p-4 bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-100 rounded">
+                    {{ $message }}
+                </div>
+            @endif
+        @if ($message = Session::get('error'))
+                <div class="p-4 bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-100 rounded">
+                    {{ $message }}
+                </div>
+            @endif
     <h3>Lista de tipos</h3>
     <ul>
         @foreach($types as $type)
