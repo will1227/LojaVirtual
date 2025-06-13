@@ -13,13 +13,26 @@ class ProductsControllerApi extends Controller
 {
 
 
-    public function createUserApi(Request $request){
-        $request ->validate([
-            'name' => 'required|string|max:',
+    public function createUserApi(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6'
         ]);
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password'])
+        ]);
+        $token = $user->createToken('api-token')->plainTextToken;
+        return response()->json([
+            'success' => true,
+            'message' => 'ok',
+            'data' => $token
+        ]);
     }
+
     public function loginapi(Request $request)
     {
         $request->validate([

@@ -13,3 +13,4 @@ Route::get('products', [ProductsControllerApi::class, 'index']);
 Route::post('loginapi', [ProductsControllerApi::class, 'loginapi']);
 Route::get('products', [ProductsControllerApi::class,
 'index'])->middleware('auth:sanctum');
+Route::post('register', [ProductsControllerApi::class, 'createUserApi']);

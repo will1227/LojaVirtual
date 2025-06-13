@@ -27,6 +27,18 @@ return new class extends Migration
             $table->foreign('type_id')->references('id')->on('types');
             $table->timestamps();
         });
+
+
+        Schema::create('suppliers', function(Blueprint $table){
+            $table->id();
+            $table->string('name');
+            $table->string('description')->nullable();
+            $table->unsignedBigInteger('type_id');
+            $table->foreign('type_id')->references('id')->on('types');
+            $table->timestamps();
+
+
+        });
     }
 
     /**
