@@ -10,9 +10,11 @@ class Suppliers extends Model
     use HasFactory;
 
     protected $fillable = [
+        'tipo',
         'name',
-        'description',
-        'type_id',
+        'cpf_cnpj',
+        'telefone'
+        
     ];
 
     /**

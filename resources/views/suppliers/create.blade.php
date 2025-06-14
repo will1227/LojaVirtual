@@ -1,12 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
-        <h3 class="text-center font-semibold text-gray-800 dark:text-gray-200 ">
-            {{ __('Manutenção de produtos') }}
+        <h3 class="text-center font-semibold text-gray-800 dark:text-gray-200">
+            {{ __('Manutenção de Fornecedor') }}
         </h3>
     </x-slot>
-    <br>
-    <div class="max-w-xl mx-auto bg-white dark:bg-gray-800 p-6 rounded-md shadow">
 
+    <br>
+
+    <div class="max-w-xl mx-auto bg-white dark:bg-gray-800 p-6 rounded-md shadow">
+        {{-- Erros de validação --}}
         @if ($errors->any())
             <ul>
                 @foreach ($errors->all() as $error)
@@ -14,33 +16,44 @@
                 @endforeach
             </ul>
         @endif
+
         <br>
 
         <form action="{{ url('suppliers/new') }}" method="POST">
             @csrf
-            <div>
-                <x-input-label for="name" :value="__('Name')" />
-                <x-text-input class="w-full" type="text" name="name" />
-            </div>
-            
-            <div>
-                <x-input-label for="name" :value="__('Descrição')" />
-                <textarea id="description" name="description"
-                    class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white" rows="5"></textarea>
+
+            {{-- Nome --}}
+            <div class="mb-4">
+                <x-input-label for="name" :value="__('Nome')" />
+                <x-text-input id="name" name="name" type="text" class="w-full" value="{{ old('name') }}" />
             </div>
 
-            <div>
-                <x-input-label for="type_id" :value="__('Tipo de produto')" />
-                <select id="type_id" name="type_id"
+            {{-- Tipo (f ou j) --}}
+            <div class="mb-4">
+                <x-input-label for="tipo" :value="__('Tipo')" />
+                <select id="tipo" name="tipo"
                     class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white">
-                    @foreach ($types as $type)
-                        <option value="{{ $type->id }}">{{ $type->name }}</option>
-                    @endforeach
+                    <option value="">Selecione</option>
+                    <option value="f" {{ old('tipo') == 'F' ? 'selected' : '' }}>Física</option>
+                    <option value="j" {{ old('tipo') == 'J' ? 'selected' : '' }}>Jurídica</option>
                 </select>
             </div>
 
+            {{-- CPF ou CNPJ --}}
+            <div class="mb-4">
+                <x-input-label for="cpf_cnpj" :value="__('CPF ou CNPJ')" />
+                <x-text-input id="cpf_cnpj" name="cpf_cnpj" type="text" class="w-full" value="{{ old('cpf_cnpj') }}" />
+            </div>
+
+            {{-- Telefone --}}
+            <div class="mb-4">
+                <x-input-label for="telefone" :value="__('Telefone')" />
+                <x-text-input id="telefone" name="telefone" type="text" class="w-full" value="{{ old('telefone') }}" />
+            </div>
+
+            {{-- Botões --}}
             <div class="flex items-center justify-end mt-4">
-                <a href="{{ url('/products') }}">
+                <a href="{{ url('/suppliers') }}">
                     <x-secondary-button>Voltar</x-secondary-button>
                 </a>
 
@@ -48,8 +61,6 @@
                     {{ __('Salvar') }}
                 </x-primary-button>
             </div>
-
-
         </form>
     </div>
 </x-app-layout>

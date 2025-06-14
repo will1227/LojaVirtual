@@ -31,10 +31,10 @@ return new class extends Migration
 
         Schema::create('suppliers', function(Blueprint $table){
             $table->id();
+            $table->enum('tipo', ['F', 'J']);
             $table->string('name');
-            $table->string('description')->nullable();
-            $table->unsignedBigInteger('type_id');
-            $table->foreign('type_id')->references('id')->on('types');
+            $table->string('cpf_cnpj');
+            $table->string('telefone');
             $table->timestamps();
 
 

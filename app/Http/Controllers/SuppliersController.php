@@ -18,16 +18,23 @@ class SuppliersController extends Controller
     public function create()
     {
         return view('suppliers.create', [
-            'types' => Type::all()
         ]);
     }
 
     public function store(Request $request)
     {
+        $request->validate([
+            'tipo' => 'required|in:f,j',
+            'name' => 'required|min:2|max:100 ',
+            'cpf_cnpj' => 'required|string|min:11|max:20',
+            'telefone' => 'required|string|min:11|max:20'
+        ]);
+        
         Suppliers::create([
+            'tipo' => $request->tipo,
             'name' => $request->name,
-            'description' => $request->description,
-            'type_id' => $request->type_id
+            'cpf_cnpj' => $request->cpf_cnpj,
+            'telefone' => $request->telefone
         ]);
         return redirect('/suppliers')->with('success', 'Fornecedor Adicionado
         com sucesso!');
@@ -35,16 +42,23 @@ class SuppliersController extends Controller
 
     public function edit($id){
         $supplier = Suppliers::find($id);
-        $types = Type::all();
-        return view('suppliers.edit', ['supplier' => $supplier, 'types' => $types]);
+
+        return view('suppliers.edit', ['supplier' => $supplier]);
     }
     public function update(Request $request, $id)
     {
         $supplier = Suppliers::findOrFail($id);
+        $request->validate([
+            'tipo' => 'required|in:f,j',
+            'name' => 'required|min:2|max:100 ',
+            'cpf_cnpj' => 'required|string|min:11|max:20',
+            'telefone' => 'required|string|min:11|max:20'
+        ]);
         $supplier->update([
+            'tipo' => $request->tipo,
             'name' => $request->name,
-            'description' => $request->description,
-            'type_id' => $request->type_id
+            'cpf_cnpj' => $request->cpf_cnpj,
+            'telefone' => $request->telefone
         ]);
         return redirect('/suppliers')->with('success', 'Fornecedor atualizado com sucesso!');
     }

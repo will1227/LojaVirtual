@@ -6,8 +6,10 @@
     </x-slot>
 
     <br>
+
     <div class="max-w-xl mx-auto bg-white dark:bg-gray-800 p-6 rounded-md shadow">
 
+        {{-- Erros de validação --}}
         @if ($errors->any())
             <ul>
                 @foreach ($errors->all() as $error)
@@ -16,40 +18,49 @@
             </ul>
         @endif
 
+        {{-- Mensagem de sucesso --}}
         @if (session('success'))
             <div class="p-4 mt-4 bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-100 rounded">
                 {{ session('success') }}
             </div>
         @endif
 
+        {{-- Formulário --}}
         <form action="{{ url('suppliers/update/' . $supplier->id) }}" method="POST">
             @csrf
-            @method('PUT')
-
-            <div>
-                <x-input-label for="name" :value="__('Name')" />
-                <x-text-input class="w-full" type="text" name="name" value="{{ old('name', $supplier->name) }}" />
+            
+            {{-- Nome --}}
+            <div class="mb-4">
+                <x-input-label for="name" :value="__('Nome')" />
+                <x-text-input id="name" class="w-full" type="text" name="name"
+                    value="{{ old('name', $supplier->name) }}" />
             </div>
 
-            <div>
-                <x-input-label for="description" :value="__('Descrição')" />
-                <textarea id="description" name="description"
-                    class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
-                    rows="5">{{ old('description', $supplier->description) }}</textarea>
-            </div>
-
-            <div>
-                <x-input-label for="type_id" :value="__('Tipo de produto')" />
-                <select id="type_id" name="type_id"
+            {{-- Tipo --}}
+            <div class="mb-4">
+                <x-input-label for="tipo" :value="__('Tipo')" />
+                <select id="tipo" name="tipo"
                     class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white">
-                    @foreach ($types as $type)
-                        <option value="{{ $type->id }}" {{ $supplier->type_id == $type->id ? 'selected' : '' }}>
-                            {{ $type->name }}
-                        </option>
-                    @endforeach
+                    <option value="f" {{ old('tipo', $supplier->tipo) == 'f' ? 'selected' : '' }}>Física</option>
+                    <option value="j" {{ old('tipo', $supplier->tipo) == 'j' ? 'selected' : '' }}>Jurídica</option>
                 </select>
             </div>
 
+            {{-- CPF/CNPJ --}}
+            <div class="mb-4">
+                <x-input-label for="cpf_cnpj" :value="__('CPF ou CNPJ')" />
+                <x-text-input id="cpf_cnpj" class="w-full" type="text" name="cpf_cnpj"
+                    value="{{ old('cpf_cnpj', $supplier->cpf_cnpj) }}" />
+            </div>
+
+            {{-- Telefone --}}
+            <div class="mb-4">
+                <x-input-label for="telefone" :value="__('Telefone')" />
+                <x-text-input id="telefone" class="w-full" type="text" name="telefone"
+                    value="{{ old('telefone', $supplier->telefone) }}" />
+            </div>
+
+            {{-- Botões --}}
             <div class="flex items-center justify-end mt-4">
                 <a href="{{ url('/suppliers') }}">
                     <x-secondary-button>Voltar</x-secondary-button>

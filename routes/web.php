@@ -40,8 +40,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/suppliers/new', [SuppliersController::class, 'store']);
     Route::get('/suppliers', [SuppliersController::class, 'index'])->name('suppliers');
     Route::get('/suppliers/update/{id}', [SuppliersController::class, 'edit']);
-    Route::post('/suppliers/update/', [SuppliersController::class, 'update']);
-    Route::get('/suppliers/delete/{id}', [SuppliersController::class, 'destroy']);
+    Route::post('/suppliers/update/{id}', [SuppliersController::class, 'update']);
+    Route::delete('/suppliers/delete/{id}', [SuppliersController::class, 'destroy']);
 
 });
 require __DIR__ . '/auth.php';
