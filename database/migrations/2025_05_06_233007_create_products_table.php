@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->integer('quantity');
             $table->decimal('price', 8, 2);
+            $table->string('image_path')->nullable();
             $table->unsignedBigInteger('type_id');
             $table->foreign('type_id')->references('id')->on('types');
             $table->timestamps();
