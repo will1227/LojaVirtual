@@ -1,6 +1,5 @@
 <x-app-layout>
     <x-slot name="header">
-        <!-- Navigation Links centralizado -->
         <div class="hidden sm:flex justify-center space-x-8">
             <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
@@ -17,22 +16,21 @@
         </div>
     </x-slot>
 
-    <!-- Título da seção -->
     <div class="text-center mt-10">
         <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200 border px-6 py-2 inline-block rounded">
             Lista de Produtos
         </h2>
     </div>
 
-    <!-- Grid de produtos -->
     <div class="max-w-7xl mx-auto mt-8 px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         @forelse ($products as $product)
         <div class="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
             {{-- Imagem --}}
+            {{-- Alterado: object-cover para object-contain para evitar cortes --}}
             <img src="{{ $product->image_path 
                 ? asset('storage/' . $product->image_path) 
                 : asset('images/placeholder.jpg') }}"
-                alt="{{ $product->name }}" class="w-full h-48 object-cover">
+                alt="{{ $product->name }}" class="w-full h-100 object-contain">
 
             {{-- Conteúdo --}}
             <div class="p-4">
