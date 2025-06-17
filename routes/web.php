@@ -7,7 +7,11 @@ use App\Http\Controllers\TypesController;
 use App\Http\Controllers\SuppliersController;
 use App\Models\Suppliers;
 use Illuminate\Support\Facades\Route;
+
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -28,14 +28,14 @@
                 <x-text-input id="name" name="name" type="text" class="w-full" value="{{ old('name') }}" />
             </div>
 
-            {{-- Tipo (f ou j) --}}
+            {{-- Tipo --}}
             <div class="mb-4">
                 <x-input-label for="tipo" :value="__('Tipo')" />
                 <select id="tipo" name="tipo"
                     class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white">
                     <option value="">Selecione</option>
-                    <option value="f" {{ old('tipo') == 'F' ? 'selected' : '' }}>Física</option>
-                    <option value="j" {{ old('tipo') == 'J' ? 'selected' : '' }}>Jurídica</option>
+                    <option value="F" {{ old('tipo') == 'F' ? 'selected' : '' }}>Física</option>
+                    <option value="J" {{ old('tipo') == 'J' ? 'selected' : '' }}>Jurídica</option>
                 </select>
             </div>
 

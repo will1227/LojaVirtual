@@ -46,7 +46,7 @@ class ProductsController extends Controller
             'quantity' => $request->quantity,
             'price' => $request->price,
             'type_id' => $request->type_id,
-            'image_path' => $imagePath,  // <- aqui é importante usar a variável com o caminho
+            'image_path' => $imagePath, 
         ]);
 
         return redirect('/products')->with('success', 'Produto adicionado com sucesso!');
